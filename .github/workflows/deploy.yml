@@ -1,0 +1,44 @@
+name: Deploy to S3 + CloudFront
+
+on:
+  push:
+    branches:
+      - main
+
+# Required for OIDC token request
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  deploy:
+    name: Sync files and invalidate CloudFront
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials via OIDC
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.GHA_ROLE_ARN }}
+          aws-region: us-east-1
+
+      - name: Sync website files to S3
+        run: |
+          aws s3 cp index.html s3://${{ secrets.S3_BUCKET_NAME }}/index.html \
+            --content-type "text/html" \
+            --cache-control "no-cache"
+          aws s3 cp app.js s3://${{ secrets.S3_BUCKET_NAME }}/app.js \
+            --content-type "application/javascript" \
+            --cache-control "public, max-age=31536000"
+          aws s3 cp styles.css s3://${{ secrets.S3_BUCKET_NAME }}/styles.css \
+            --content-type "text/css" \
+            --cache-control "public, max-age=31536000"
+
+      - name: Invalidate CloudFront cache
+        run: |
+          aws cloudfront create-invalidation \
+            --distribution-id ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }} \
+            --paths "/*"

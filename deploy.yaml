@@ -1,0 +1,282 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: >
+  Supershop static website - S3 + CloudFront + WAF (SQL injection protection).
+  NOTE: Must be deployed in us-east-1 because WAF WebACLs for CloudFront must be in us-east-1.
+
+Parameters:
+  BucketName:
+    Type: String
+    Description: Globally unique S3 bucket name for the website
+    Default: supershop-mazpugo
+
+  GitHubOrg:
+    Type: String
+    Description: GitHub organisation or user name (e.g. myorg)
+
+  GitHubRepo:
+    Type: String
+    Description: GitHub repository name (e.g. supershop)
+
+Resources:
+
+  # S3 Bucket (private, no public access)
+  WebsiteBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Ref BucketName
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+      MetricsConfigurations:
+        - Id: EntireBucket
+
+  # WAF Web ACL (CLOUDFRONT scope, must be us-east-1)
+  WebACL:
+    Type: AWS::WAFv2::WebACL
+    Properties:
+      Name: !Sub '${BucketName}-waf'
+      Scope: CLOUDFRONT
+      Description: WAF for Supershop CloudFront - SQL injection protection
+      DefaultAction:
+        Allow: {}
+      VisibilityConfig:
+        SampledRequestsEnabled: true
+        CloudWatchMetricsEnabled: true
+        MetricName: !Sub '${BucketName}-waf-metric'
+      Rules:
+        - Name: AWSManagedRulesSQLiRuleSet
+          Priority: 0
+          OverrideAction:
+            None: {}
+          Statement:
+            ManagedRuleGroupStatement:
+              VendorName: AWS
+              Name: AWSManagedRulesSQLiRuleSet
+          VisibilityConfig:
+            SampledRequestsEnabled: true
+            CloudWatchMetricsEnabled: true
+            MetricName: AWSManagedRulesSQLiRuleSet
+        - Name: AWSManagedRulesKnownBadInputsRuleSet
+          Priority: 1
+          OverrideAction:
+            None: {}
+          Statement:
+            ManagedRuleGroupStatement:
+              VendorName: AWS
+              Name: AWSManagedRulesKnownBadInputsRuleSet
+          VisibilityConfig:
+            SampledRequestsEnabled: true
+            CloudWatchMetricsEnabled: true
+            MetricName: AWSManagedRulesKnownBadInputsRuleSet
+
+  # CloudFront Origin Access Control
+  CloudFrontOAC:
+    Type: AWS::CloudFront::OriginAccessControl
+    Properties:
+      OriginAccessControlConfig:
+        Name: !Sub '${BucketName}-oac'
+        Description: OAC for Supershop S3 bucket
+        OriginAccessControlOriginType: s3
+        SigningBehavior: always
+        SigningProtocol: sigv4
+
+  # CloudFront Distribution
+  CloudFrontDistribution:
+    Type: AWS::CloudFront::Distribution
+    Properties:
+      DistributionConfig:
+        Enabled: true
+        DefaultRootObject: index.html
+        Comment: Supershop website distribution
+        WebACLId: !GetAtt WebACL.Arn
+        Origins:
+          - Id: S3Origin
+            DomainName: !GetAtt WebsiteBucket.RegionalDomainName
+            OriginAccessControlId: !GetAtt CloudFrontOAC.Id
+            S3OriginConfig:
+              OriginAccessIdentity: ''
+        DefaultCacheBehavior:
+          TargetOriginId: S3Origin
+          ViewerProtocolPolicy: redirect-to-https
+          CachePolicyId: 658327ea-f89d-4fab-a63d-7e88639e58f6
+          AllowedMethods:
+            - GET
+            - HEAD
+          CachedMethods:
+            - GET
+            - HEAD
+          Compress: true
+        CustomErrorResponses:
+          - ErrorCode: 403
+            ResponseCode: 200
+            ResponsePagePath: /index.html
+            ErrorCachingMinTTL: 0
+          - ErrorCode: 404
+            ResponseCode: 200
+            ResponsePagePath: /index.html
+            ErrorCachingMinTTL: 0
+        HttpVersion: http2
+        IPV6Enabled: true
+
+  # CloudWatch Dashboard
+  SupershopDashboard:
+    Type: AWS::CloudWatch::Dashboard
+    Properties:
+      DashboardName: !Sub '${BucketName}-dashboard'
+      DashboardBody: !Sub |
+        {
+          "widgets": [
+            {
+              "type": "text",
+              "x": 0, "y": 0, "width": 24, "height": 1,
+              "properties": {
+                "markdown": "# Supershop Website Dashboard"
+              }
+            },
+            {
+              "type": "metric",
+              "x": 0, "y": 1, "width": 12, "height": 6,
+              "properties": {
+                "title": "CloudFront - Total Requests",
+                "view": "timeSeries",
+                "stacked": false,
+                "stat": "Sum",
+                "period": 300,
+                "metrics": [
+                  [ "AWS/CloudFront", "Requests", "DistributionId", "${CloudFrontDistribution}", "Region", "Global" ]
+                ],
+                "region": "us-east-1"
+              }
+            },
+            {
+              "type": "metric",
+              "x": 12, "y": 1, "width": 12, "height": 6,
+              "properties": {
+                "title": "CloudFront - 4xx and 5xx Error Rate",
+                "view": "timeSeries",
+                "stacked": false,
+                "stat": "Average",
+                "period": 300,
+                "metrics": [
+                  [ "AWS/CloudFront", "4xxErrorRate", "DistributionId", "${CloudFrontDistribution}", "Region", "Global" ],
+                  [ "AWS/CloudFront", "5xxErrorRate", "DistributionId", "${CloudFrontDistribution}", "Region", "Global" ]
+                ],
+                "region": "us-east-1"
+              }
+            },
+            {
+              "type": "metric",
+              "x": 0, "y": 7, "width": 12, "height": 6,
+              "properties": {
+                "title": "S3 - All Requests",
+                "view": "timeSeries",
+                "stacked": false,
+                "stat": "Sum",
+                "period": 86400,
+                "metrics": [
+                  [ "AWS/S3", "AllRequests", "BucketName", "${BucketName}", "FilterId", "EntireBucket" ]
+                ],
+                "region": "us-east-1"
+              }
+            },
+            {
+              "type": "metric",
+              "x": 12, "y": 7, "width": 12, "height": 6,
+              "properties": {
+                "title": "CloudFront - Bytes Downloaded",
+                "view": "timeSeries",
+                "stacked": false,
+                "stat": "Sum",
+                "period": 300,
+                "metrics": [
+                  [ "AWS/CloudFront", "BytesDownloaded", "DistributionId", "${CloudFrontDistribution}", "Region", "Global" ]
+                ],
+                "region": "us-east-1"
+              }
+            }
+          ]
+        }
+
+
+  GitHubActionsDeployRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: !Sub '${BucketName}-github-deploy-role'
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Federated: !Sub 'arn:aws:iam::${AWS::AccountId}:oidc-provider/token.actions.githubusercontent.com'
+            Action: sts:AssumeRoleWithWebIdentity
+            Condition:
+              StringEquals:
+                token.actions.githubusercontent.com:aud: sts.amazonaws.com
+              StringLike:
+                # Only the main branch of your specific repo can assume this role
+                token.actions.githubusercontent.com:sub: !Sub 'repo:${GitHubOrg}/${GitHubRepo}:ref:refs/heads/main'
+      Policies:
+        - PolicyName: S3DeployPolicy
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Sid: S3PutObjects
+                Effect: Allow
+                Action:
+                  - s3:PutObject
+                  - s3:PutObjectAcl
+                Resource: !Sub 'arn:aws:s3:::${BucketName}/*'
+        - PolicyName: CloudFrontInvalidationPolicy
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Sid: CloudFrontInvalidate
+                Effect: Allow
+                Action: cloudfront:CreateInvalidation
+                Resource: !Sub 'arn:aws:cloudfront::${AWS::AccountId}:distribution/${CloudFrontDistribution}'
+
+  # Bucket Policy (allow only CloudFront via OAC)
+  WebsiteBucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket: !Ref WebsiteBucket
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Sid: AllowCloudFrontOAC
+            Effect: Allow
+            Principal:
+              Service: cloudfront.amazonaws.com
+            Action: s3:GetObject
+            Resource: !Sub 'arn:aws:s3:::${BucketName}/*'
+            Condition:
+              StringEquals:
+                AWS:SourceArn: !Sub >-
+                  arn:aws:cloudfront::${AWS::AccountId}:distribution/${CloudFrontDistribution}
+
+Outputs:
+  GitHubActionsRoleArn:
+    Description: IAM Role ARN for GitHub Actions OIDC — set as GHA_ROLE_ARN secret
+    Value: !GetAtt GitHubActionsDeployRole.Arn
+
+  DashboardURL:
+    Description: CloudWatch Dashboard URL
+    Value: !Sub 'https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=${BucketName}-dashboard'
+
+  CloudFrontURL:
+    Description: CloudFront distribution URL
+    Value: !Sub 'https://${CloudFrontDistribution.DomainName}'
+
+  CloudFrontDistributionId:
+    Description: CloudFront distribution ID
+    Value: !Ref CloudFrontDistribution
+
+  WebACLArn:
+    Description: WAF Web ACL ARN
+    Value: !GetAtt WebACL.Arn
+
+  BucketName:
+    Description: Name of the S3 bucket
+    Value: !Ref WebsiteBucket
