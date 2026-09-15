@@ -8,11 +8,11 @@ const PRODUCTS = [
     originalPrice: 1999.99,
     rating: 4.8,
     reviews: 3241,
-    image: "/images/macbook-pro-m3.jpg",
+    image: "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=400&h=400&fit=crop",
     images: [
-      "/images/macbook-pro-m3.jpg",
-      "/images/macbook-pro-m3-side.jpg",
-      "/images/macbook-pro-m3-open.jpg"
+      "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=400&h=400&fit=crop",
+      "https://images.unsplash.com/photo-1611186871525-5b16bef76d64?w=400&h=400&fit=crop",
+      "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=400&h=400&fit=crop"
     ],
     prime: true,
     badge: "Best Seller",
@@ -35,10 +35,10 @@ const PRODUCTS = [
     originalPrice: 399.99,
     rating: 4.7,
     reviews: 18742,
-    image: "/images/sony-wh1000xm5.jpg",
+    image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400&h=400&fit=crop",
     images: [
-      "/images/sony-wh1000xm5.jpg",
-      "/images/sony-wh1000xm5-folded.jpg"
+      "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400&h=400&fit=crop",
+      "https://images.unsplash.com/photo-1484704849700-f032a568e944?w=400&h=400&fit=crop"
     ],
     prime: true,
     badge: "Deal",
@@ -61,9 +61,9 @@ const PRODUCTS = [
     originalPrice: 1499.99,
     rating: 4.6,
     reviews: 5921,
-    image: "/images/samsung-qled-tv.jpg",
+    image: "https://images.unsplash.com/photo-1593359677879-a4bb92f829d1?w=400&h=400&fit=crop",
     images: [
-      "/images/samsung-qled-tv.jpg"
+      "https://images.unsplash.com/photo-1593359677879-a4bb92f829d1?w=400&h=400&fit=crop"
     ],
     prime: true,
     badge: "Best Seller",
@@ -86,10 +86,10 @@ const PRODUCTS = [
     originalPrice: 150.00,
     rating: 4.5,
     reviews: 22105,
-    image: "/images/nike-air-max-270.jpg",
+    image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400&h=400&fit=crop",
     images: [
-      "/images/nike-air-max-270.jpg",
-      "/images/nike-air-max-270-side.jpg"
+      "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400&h=400&fit=crop",
+      "https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?w=400&h=400&fit=crop"
     ],
     prime: true,
     badge: "Deal",
@@ -112,9 +112,9 @@ const PRODUCTS = [
     originalPrice: 99.95,
     rating: 4.7,
     reviews: 145832,
-    image: "/images/instant-pot-duo.jpg",
+    image: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400&h=400&fit=crop",
     images: [
-      "/images/instant-pot-duo.jpg"
+      "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400&h=400&fit=crop"
     ],
     prime: true,
     badge: "Best Seller",
@@ -137,9 +137,9 @@ const PRODUCTS = [
     originalPrice: 159.99,
     rating: 4.8,
     reviews: 87341,
-    image: "/images/kindle-paperwhite.jpg",
+    image: "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=400&h=400&fit=crop",
     images: [
-      "/images/kindle-paperwhite.jpg"
+      "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=400&h=400&fit=crop"
     ],
     prime: true,
     badge: "Amazon's Choice",
@@ -162,9 +162,9 @@ const PRODUCTS = [
     originalPrice: 749.99,
     rating: 4.6,
     reviews: 9823,
-    image: "/images/dyson-v15.jpg",
+    image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=400&fit=crop",
     images: [
-      "/images/dyson-v15.jpg"
+      "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=400&fit=crop"
     ],
     prime: false,
     badge: null,
@@ -187,9 +187,9 @@ const PRODUCTS = [
     originalPrice: 49.99,
     rating: 4.9,
     reviews: 6512,
-    image: "/images/lego-tropical-parrot.jpg",
+    image: "https://images.unsplash.com/photo-1558060370-d644479cb6f7?w=400&h=400&fit=crop",
     images: [
-      "/images/lego-tropical-parrot.jpg"
+      "https://images.unsplash.com/photo-1558060370-d644479cb6f7?w=400&h=400&fit=crop"
     ],
     prime: true,
     badge: "Deal",
@@ -212,9 +212,9 @@ const PRODUCTS = [
     originalPrice: 190.00,
     rating: 4.6,
     reviews: 11432,
-    image: "/images/adidas-ultraboost-22.jpg",
+    image: "https://images.unsplash.com/photo-1560769629-975ec94e6a86?w=400&h=400&fit=crop",
     images: [
-      "/images/adidas-ultraboost-22.jpg"
+      "https://images.unsplash.com/photo-1560769629-975ec94e6a86?w=400&h=400&fit=crop"
     ],
     prime: true,
     badge: null,
@@ -237,9 +237,9 @@ const PRODUCTS = [
     originalPrice: 24.99,
     rating: 4.8,
     reviews: 54210,
-    image: "/images/psychology-of-money.jpg",
+    image: "https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=400&h=400&fit=crop",
     images: [
-      "/images/psychology-of-money.jpg"
+      "https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=400&h=400&fit=crop"
     ],
     prime: true,
     badge: "Best Seller",
@@ -262,9 +262,9 @@ const PRODUCTS = [
     originalPrice: 1099.00,
     rating: 4.7,
     reviews: 32187,
-    image: "/images/iphone-15-pro.jpg",
+    image: "https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5?w=400&h=400&fit=crop",
     images: [
-      "/images/iphone-15-pro.jpg"
+      "https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5?w=400&h=400&fit=crop"
     ],
     prime: true,
     badge: "Best Seller",
@@ -287,9 +287,9 @@ const PRODUCTS = [
     originalPrice: 18.99,
     rating: 4.5,
     reviews: 7821,
-    image: "/images/organic-green-tea.jpg",
+    image: "https://images.unsplash.com/photo-1564890369478-c89ca6d9cde9?w=400&h=400&fit=crop",
     images: [
-      "/images/organic-green-tea.jpg"
+      "https://images.unsplash.com/photo-1564890369478-c89ca6d9cde9?w=400&h=400&fit=crop"
     ],
     prime: true,
     badge: null,
