@@ -71,6 +71,28 @@ Resources:
             CloudWatchMetricsEnabled: true
             MetricName: AWSManagedRulesKnownBadInputsRuleSet
 
+  # S3 Bucket for product images (private, no public access)
+  ImagesBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Sub '${BucketName}-images'
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+
+  # Origin Access Control for the images bucket
+  ImagesOAC:
+    Type: AWS::CloudFront::OriginAccessControl
+    Properties:
+      OriginAccessControlConfig:
+        Name: !Sub '${BucketName}-images-oac'
+        Description: OAC for Supershop product images S3 bucket
+        OriginAccessControlOriginType: s3
+        SigningBehavior: always
+        SigningProtocol: sigv4
+
   # CloudFront Origin Access Control
   CloudFrontOAC:
     Type: AWS::CloudFront::OriginAccessControl
@@ -97,6 +119,23 @@ Resources:
             OriginAccessControlId: !GetAtt CloudFrontOAC.Id
             S3OriginConfig:
               OriginAccessIdentity: ''
+          - Id: ImagesOrigin
+            DomainName: !GetAtt ImagesBucket.RegionalDomainName
+            OriginAccessControlId: !GetAtt ImagesOAC.Id
+            S3OriginConfig:
+              OriginAccessIdentity: ''
+        CacheBehaviors:
+          - PathPattern: /images/*
+            TargetOriginId: ImagesOrigin
+            ViewerProtocolPolicy: redirect-to-https
+            CachePolicyId: 658327ea-f89d-4fab-a63d-7e88639e58f6
+            AllowedMethods:
+              - GET
+              - HEAD
+            CachedMethods:
+              - GET
+              - HEAD
+            Compress: true
         DefaultCacheBehavior:
           TargetOriginId: S3Origin
           ViewerProtocolPolicy: redirect-to-https
@@ -254,6 +293,25 @@ Resources:
                 AWS:SourceArn: !Sub >-
                   arn:aws:cloudfront::${AWS::AccountId}:distribution/${CloudFrontDistribution}
 
+  # Images Bucket Policy (allow only CloudFront via OAC)
+  ImagesBucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket: !Ref ImagesBucket
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Sid: AllowCloudFrontImagesOAC
+            Effect: Allow
+            Principal:
+              Service: cloudfront.amazonaws.com
+            Action: s3:GetObject
+            Resource: !Sub 'arn:aws:s3:::${BucketName}-images/*'
+            Condition:
+              StringEquals:
+                AWS:SourceArn: !Sub >-
+                  arn:aws:cloudfront::${AWS::AccountId}:distribution/${CloudFrontDistribution}
+
 Outputs:
   GitHubActionsRoleArn:
     Description: IAM Role ARN for GitHub Actions OIDC — set as GHA_ROLE_ARN secret
@@ -274,6 +332,10 @@ Outputs:
   WebACLArn:
     Description: WAF Web ACL ARN
     Value: !GetAtt WebACL.Arn
+
+  ImagesBucketName:
+    Description: Name of the S3 bucket for product images
+    Value: !Ref ImagesBucket
 
   BucketName:
     Description: Name of the S3 bucket
