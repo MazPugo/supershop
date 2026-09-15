@@ -214,8 +214,6 @@ Resources:
             Condition:
               StringEquals:
                 token.actions.githubusercontent.com:aud: sts.amazonaws.com
-              StringLike:
-                # Only the main branch of your specific repo can assume this role
                 token.actions.githubusercontent.com:sub: !Sub 'repo:${GitHubOrg}/${GitHubRepo}:ref:refs/heads/main'
       Policies:
         - PolicyName: S3DeployPolicy
