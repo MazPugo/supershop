@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>John Smith — Cloud Engineer</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- ── NAVBAR ── -->
+  <nav id="navbar">
+    <div class="nav-container">
+      <a href="#hero" class="nav-logo">JS<span>.</span></a>
+      <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#certifications">Certifications</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#resume">Resume</a></li>
+        <li><a href="#contact" class="nav-cta">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- ── HERO ── -->
+  <section id="hero">
+    <div class="hero-bg">
+      <div class="hero-grid"></div>
+      <div class="hero-glow"></div>
+    </div>
+    <div class="hero-content">
+      <p class="hero-greeting">👋 Hello, I'm</p>
+      <h1 class="hero-name">John Smith</h1>
+      <h2 class="hero-title">Cloud Engineer</h2>
+      <p class="hero-tagline">Building scalable, resilient, and secure cloud infrastructure<br />that powers modern applications at any scale.</p>
+      <div class="hero-actions">
+        <a href="#projects" class="btn btn-primary">View My Work</a>
+        <a href="#contact" class="btn btn-outline">Get In Touch</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat"><span class="stat-number">5+</span><span class="stat-label">Years Experience</span></div>
+        <div class="stat-divider"></div>
+        <div class="stat"><span class="stat-number">30+</span><span class="stat-label">Projects Delivered</span></div>
+        <div class="stat-divider"></div>
+        <div class="stat"><span class="stat-number">4</span><span class="stat-label">AWS Certifications</span></div>
+      </div>
+    </div>
+    <div class="hero-scroll">
+      <span>Scroll down</span>
+      <div class="scroll-indicator"></div>
+    </div>
+  </section>
+
+  <!-- ── ABOUT ── -->
+  <section id="about">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">About Me</span>
+        <h2>Passionate about cloud infrastructure</h2>
+      </div>
+      <div class="about-grid">
+        <div class="about-image">
+          <div class="about-avatar">
+            <div class="avatar-initials">JS</div>
+            <div class="avatar-ring"></div>
+            <div class="avatar-dots">
+              <span class="dot dot-aws"></span>
+              <span class="dot dot-docker"></span>
+              <span class="dot dot-terraform"></span>
+            </div>
+          </div>
+        </div>
+        <div class="about-text">
+          <p>I'm a Cloud Engineer with over 5 years of experience designing, building, and operating cloud infrastructure on AWS. I specialise in infrastructure automation, DevOps transformation, and building CI/CD pipelines that enable teams to ship faster with confidence.</p>
+          <p>My background spans startup environments and enterprise organisations, giving me the ability to design cost-efficient architectures that scale from zero to millions of requests without compromising reliability or security.</p>
+          <p>When I'm not writing Terraform or debugging Kubernetes clusters, I contribute to open-source projects and mentor junior engineers entering the cloud space.</p>
+          <div class="about-highlights">
+            <div class="highlight">
+              <span class="highlight-icon">☁️</span>
+              <div>
+                <strong>Cloud Architecture</strong>
+                <p>Designing fault-tolerant, highly available systems on AWS</p>
+              </div>
+            </div>
+            <div class="highlight">
+              <span class="highlight-icon">⚙️</span>
+              <div>
+                <strong>Infrastructure as Code</strong>
+                <p>Automating everything with Terraform, CloudFormation & CDK</p>
+              </div>
+            </div>
+            <div class="highlight">
+              <span class="highlight-icon">🚀</span>
+              <div>
+                <strong>DevOps Practices</strong>
+                <p>CI/CD pipelines, GitOps workflows, and release automation</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SKILLS ── -->
+  <section id="skills">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Technical Skills</span>
+        <h2>Tools & Technologies</h2>
+      </div>
+      <div class="skills-grid">
+
+        <div class="skill-category">
+          <div class="skill-category-header">
+            <span class="skill-icon">☁️</span>
+            <h3>Cloud Platforms</h3>
+          </div>
+          <div class="skill-bar-list">
+            <div class="skill-bar-item">
+              <div class="skill-bar-label"><span>AWS</span><span>95%</span></div>
+              <div class="skill-bar-track"><div class="skill-bar-fill" data-width="95"></div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="skill-category">
+          <div class="skill-category-header">
+            <span class="skill-icon">📋</span>
+            <h3>Infrastructure as Code</h3>
+          </div>
+          <div class="skill-badges">
+            <span class="badge">Terraform</span>
+            <span class="badge">CloudFormation</span>
+            <span class="badge">AWS CDK</span>
+            <span class="badge">Pulumi</span>
+          </div>
+        </div>
+
+        <div class="skill-category">
+          <div class="skill-category-header">
+            <span class="skill-icon">🐳</span>
+            <h3>Containerization & Orchestration</h3>
+          </div>
+          <div class="skill-badges">
+            <span class="badge">Docker</span>
+            <span class="badge">Kubernetes</span>
+            <span class="badge">Amazon ECS</span>
+            <span class="badge">Amazon EKS</span>
+          </div>
+        </div>
+
+        <div class="skill-category">
+          <div class="skill-category-header">
+            <span class="skill-icon">🔄</span>
+            <h3>CI/CD Tools</h3>
+          </div>
+          <div class="skill-badges">
+            <span class="badge">GitHub Actions</span>
+            <span class="badge">Jenkins</span>
+            <span class="badge">AWS CodePipeline</span>
+            <span class="badge">GitLab CI/CD</span>
+          </div>
+        </div>
+
+        <div class="skill-category">
+          <div class="skill-category-header">
+            <span class="skill-icon">📊</span>
+            <h3>Monitoring & Logging</h3>
+          </div>
+          <div class="skill-badges">
+            <span class="badge">CloudWatch</span>
+            <span class="badge">Datadog</span>
+            <span class="badge">Prometheus</span>
+            <span class="badge">Grafana</span>
+            <span class="badge">ELK Stack</span>
+          </div>
+        </div>
+
+        <div class="skill-category">
+          <div class="skill-category-header">
+            <span class="skill-icon">💻</span>
+            <h3>Scripting & Programming</h3>
+          </div>
+          <div class="skill-bar-list">
+            <div class="skill-bar-item">
+              <div class="skill-bar-label"><span>Python</span><span>90%</span></div>
+              <div class="skill-bar-track"><div class="skill-bar-fill" data-width="90"></div></div>
+            </div>
+            <div class="skill-bar-item">
+              <div class="skill-bar-label"><span>Bash</span><span>85%</span></div>
+              <div class="skill-bar-track"><div class="skill-bar-fill" data-width="85"></div></div>
+            </div>
+            <div class="skill-bar-item">
+              <div class="skill-bar-label"><span>Go</span><span>70%</span></div>
+              <div class="skill-bar-track"><div class="skill-bar-fill" data-width="70"></div></div>
+            </div>
+            <div class="skill-bar-item">
+              <div class="skill-bar-label"><span>YAML / JSON</span><span>95%</span></div>
+              <div class="skill-bar-track"><div class="skill-bar-fill" data-width="95"></div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="skill-category">
+          <div class="skill-category-header">
+            <span class="skill-icon">🔒</span>
+            <h3>Networking & Security</h3>
+          </div>
+          <div class="skill-badges">
+            <span class="badge">VPC</span>
+            <span class="badge">Route 53</span>
+            <span class="badge">IAM</span>
+            <span class="badge">AWS WAF</span>
+            <span class="badge">SSL/TLS</span>
+          </div>
+        </div>
+
+        <div class="skill-category">
+          <div class="skill-category-header">
+            <span class="skill-icon">🖥️</span>
+            <h3>Operating Systems</h3>
+          </div>
+          <div class="skill-badges">
+            <span class="badge">Linux</span>
+            <span class="badge">Windows Server</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CERTIFICATIONS ── -->
+  <section id="certifications">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Certifications</span>
+        <h2>Professional Credentials</h2>
+      </div>
+      <div class="certs-grid">
+        <div class="cert-card">
+          <div class="cert-badge cert-gold">
+            <span class="cert-logo">AWS</span>
+          </div>
+          <div class="cert-info">
+            <h3>AWS Certified Solutions Architect</h3>
+            <p class="cert-level">Professional</p>
+            <p class="cert-issuer">Amazon Web Services</p>
+            <p class="cert-date">Obtained: March 2022</p>
+            <span class="cert-status active">Active</span>
+          </div>
+        </div>
+        <div class="cert-card">
+          <div class="cert-badge cert-blue">
+            <span class="cert-logo">AWS</span>
+          </div>
+          <div class="cert-info">
+            <h3>AWS Certified DevOps Engineer</h3>
+            <p class="cert-level">Professional</p>
+            <p class="cert-issuer">Amazon Web Services</p>
+            <p class="cert-date">Obtained: August 2022</p>
+            <span class="cert-status active">Active</span>
+          </div>
+        </div>
+        <div class="cert-card">
+          <div class="cert-badge cert-orange">
+            <span class="cert-logo">AWS</span>
+          </div>
+          <div class="cert-info">
+            <h3>AWS Certified SysOps Administrator</h3>
+            <p class="cert-level">Associate</p>
+            <p class="cert-issuer">Amazon Web Services</p>
+            <p class="cert-date">Obtained: January 2021</p>
+            <span class="cert-status active">Active</span>
+          </div>
+        </div>
+        <div class="cert-card">
+          <div class="cert-badge cert-purple">
+            <span class="cert-logo">CKA</span>
+          </div>
+          <div class="cert-info">
+            <h3>Certified Kubernetes Administrator</h3>
+            <p class="cert-level">Professional</p>
+            <p class="cert-issuer">Cloud Native Computing Foundation</p>
+            <p class="cert-date">Obtained: June 2023</p>
+            <span class="cert-status active">Active</span>
+          </div>
+        </div>
+        <div class="cert-card">
+          <div class="cert-badge cert-green">
+            <span class="cert-logo">TF</span>
+          </div>
+          <div class="cert-info">
+            <h3>HashiCorp Certified: Terraform Associate</h3>
+            <p class="cert-level">Associate</p>
+            <p class="cert-issuer">HashiCorp</p>
+            <p class="cert-date">Obtained: November 2022</p>
+            <span class="cert-status active">Active</span>
+          </div>
+        </div>
+        <div class="cert-card">
+          <div class="cert-badge cert-teal">
+            <span class="cert-logo">AWS</span>
+          </div>
+          <div class="cert-info">
+            <h3>AWS Certified Cloud Practitioner</h3>
+            <p class="cert-level">Foundational</p>
+            <p class="cert-issuer">Amazon Web Services</p>
+            <p class="cert-date">Obtained: June 2020</p>
+            <span class="cert-status active">Active</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── PROJECTS ── -->
+  <section id="projects">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Projects</span>
+        <h2>Featured Cloud Projects</h2>
+      </div>
+      <div class="projects-grid">
+
+        <div class="project-card">
+          <div class="project-thumb project-thumb-1">
+            <div class="project-thumb-overlay">
+              <span class="project-thumb-icon">🌐</span>
+            </div>
+          </div>
+          <div class="project-content">
+            <h3>Static Website Hosting with S3, CloudFront & WAF</h3>
+            <p>A production-grade static website hosted on S3, distributed globally via CloudFront with WAF protection against SQL injection and known bad inputs. Includes CI/CD deployment via GitHub Actions.</p>
+            <div class="project-tags">
+              <span>S3</span><span>CloudFront</span><span>WAF</span><span>GitHub Actions</span><span>CloudFormation</span>
+            </div>
+            <div class="project-links">
+              <a href="#" class="project-link" aria-label="View on GitHub">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+                GitHub
+              </a>
+              <a href="#" class="project-link project-link-demo" aria-label="Live demo">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                Live Demo
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <div class="project-thumb project-thumb-2">
+            <div class="project-thumb-overlay">
+              <span class="project-thumb-icon">⚡</span>
+            </div>
+          </div>
+          <div class="project-content">
+            <h3>Serverless Application with Lambda, API Gateway & DynamoDB</h3>
+            <p>A fully serverless REST API built with AWS Lambda and API Gateway backed by DynamoDB. Features auto-scaling, pay-per-use billing, and Infrastructure as Code via AWS SAM.</p>
+            <div class="project-tags">
+              <span>Lambda</span><span>API Gateway</span><span>DynamoDB</span><span>SAM</span><span>Python</span>
+            </div>
+            <div class="project-links">
+              <a href="#" class="project-link" aria-label="View on GitHub">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+                GitHub
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <div class="project-thumb project-thumb-3">
+            <div class="project-thumb-overlay">
+              <span class="project-thumb-icon">🔄</span>
+            </div>
+          </div>
+          <div class="project-content">
+            <h3>CI/CD Pipeline with GitHub Actions & AWS CodePipeline</h3>
+            <p>An end-to-end CI/CD pipeline integrating GitHub Actions for testing and linting with AWS CodePipeline for deployment. Includes blue/green deployments and automatic rollback on failure.</p>
+            <div class="project-tags">
+              <span>GitHub Actions</span><span>CodePipeline</span><span>CodeDeploy</span><span>ECS</span><span>ECR</span>
+            </div>
+            <div class="project-links">
+              <a href="#" class="project-link" aria-label="View on GitHub">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+                GitHub
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <div class="project-thumb project-thumb-4">
+            <div class="project-thumb-overlay">
+              <span class="project-thumb-icon">🏗️</span>
+            </div>
+          </div>
+          <div class="project-content">
+            <h3>Infrastructure Automation with Terraform & CloudFormation</h3>
+            <p>A multi-account AWS landing zone built with Terraform modules and CloudFormation StackSets. Provisions VPCs, subnets, security groups, IAM roles, and SCPs across multiple AWS accounts.</p>
+            <div class="project-tags">
+              <span>Terraform</span><span>CloudFormation</span><span>AWS Organizations</span><span>IAM</span><span>VPC</span>
+            </div>
+            <div class="project-links">
+              <a href="#" class="project-link" aria-label="View on GitHub">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+                GitHub
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <div class="project-thumb project-thumb-5">
+            <div class="project-thumb-overlay">
+              <span class="project-thumb-icon">☸️</span>
+            </div>
+          </div>
+          <div class="project-content">
+            <h3>Container Orchestration with EKS & Fargate</h3>
+            <p>A microservices application deployed on Amazon EKS with Fargate profiles. Includes Helm charts, cluster autoscaler, ALB Ingress Controller, and full observability with Prometheus and Grafana.</p>
+            <div class="project-tags">
+              <span>EKS</span><span>Fargate</span><span>Helm</span><span>Prometheus</span><span>Grafana</span>
+            </div>
+            <div class="project-links">
+              <a href="#" class="project-link" aria-label="View on GitHub">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+                GitHub
+              </a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── RESUME ── -->
+  <section id="resume">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Resume</span>
+        <h2>Experience & Education</h2>
+        <a href="#" class="btn btn-primary" id="download-resume">⬇ Download Resume</a>
+      </div>
+      <div class="resume-grid">
+        <!-- Experience -->
+        <div class="timeline-col">
+          <h3 class="timeline-heading">💼 Work Experience</h3>
+          <div class="timeline">
+            <div class="timeline-item">
+              <div class="timeline-dot"></div>
+              <div class="timeline-content">
+                <span class="timeline-date">2022 — Present</span>
+                <h4>Senior Cloud Engineer</h4>
+                <p class="timeline-company">TechCorp Solutions · London, UK</p>
+                <ul>
+                  <li>Architected and deployed multi-region AWS infrastructure serving 10M+ monthly users</li>
+                  <li>Reduced infrastructure costs by 35% through Reserved Instance optimisation and right-sizing</li>
+                  <li>Led migration of 50+ microservices from on-premise to Amazon EKS</li>
+                  <li>Implemented GitOps workflows with ArgoCD reducing deployment time by 60%</li>
+                </ul>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-dot"></div>
+              <div class="timeline-content">
+                <span class="timeline-date">2020 — 2022</span>
+                <h4>Cloud Engineer</h4>
+                <p class="timeline-company">CloudBuild Ltd · Manchester, UK</p>
+                <ul>
+                  <li>Designed and maintained CI/CD pipelines for 20+ engineering teams</li>
+                  <li>Built Terraform modules used across the organisation for standard infrastructure patterns</li>
+                  <li>Implemented centralised logging and monitoring with ELK Stack and Datadog</li>
+                </ul>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-dot"></div>
+              <div class="timeline-content">
+                <span class="timeline-date">2018 — 2020</span>
+                <h4>DevOps Engineer</h4>
+                <p class="timeline-company">StartupHub · Remote</p>
+                <ul>
+                  <li>Migrated legacy monolithic application to containerised microservices on AWS ECS</li>
+                  <li>Automated infrastructure provisioning with CloudFormation reducing setup time from days to hours</li>
+                  <li>Implemented disaster recovery strategy achieving RPO of 1 hour and RTO of 2 hours</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Education -->
+        <div class="timeline-col">
+          <h3 class="timeline-heading">🎓 Education</h3>
+          <div class="timeline">
+            <div class="timeline-item">
+              <div class="timeline-dot"></div>
+              <div class="timeline-content">
+                <span class="timeline-date">2014 — 2018</span>
+                <h4>BSc Computer Science</h4>
+                <p class="timeline-company">University of Manchester · Manchester, UK</p>
+                <ul>
+                  <li>First Class Honours</li>
+                  <li>Dissertation: Automated Cloud Resource Optimisation using Machine Learning</li>
+                  <li>AWS Student Ambassador</li>
+                </ul>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-dot"></div>
+              <div class="timeline-content">
+                <span class="timeline-date">2023</span>
+                <h4>AWS re:Invent</h4>
+                <p class="timeline-company">Amazon Web Services · Las Vegas, NV</p>
+                <ul>
+                  <li>Speaker: "Scaling Kubernetes on EKS: Lessons from Production"</li>
+                  <li>AWS Hero Recognition</li>
+                </ul>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-dot"></div>
+              <div class="timeline-content">
+                <span class="timeline-date">2022</span>
+                <h4>HashiConf Global</h4>
+                <p class="timeline-company">HashiCorp · Los Angeles, CA</p>
+                <ul>
+                  <li>Terraform Ambassador Programme participant</li>
+                  <li>Workshop: Advanced Terraform Patterns for Enterprise</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CONTACT ── -->
+  <section id="contact">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Contact</span>
+        <h2>Let's Work Together</h2>
+        <p class="section-subtitle">Have a project in mind or want to discuss cloud architecture? I'd love to hear from you.</p>
+      </div>
+      <div class="contact-grid">
+        <div class="contact-info">
+          <div class="contact-item">
+            <span class="contact-icon">📧</span>
+            <div>
+              <strong>Email</strong>
+              <p>john.smith@cloudeng.dev</p>
+            </div>
+          </div>
+          <div class="contact-item">
+            <span class="contact-icon">📍</span>
+            <div>
+              <strong>Location</strong>
+              <p>London, United Kingdom</p>
+            </div>
+          </div>
+          <div class="contact-item">
+            <span class="contact-icon">💼</span>
+            <div>
+              <strong>Availability</strong>
+              <p>Open to freelance & full-time roles</p>
+            </div>
+          </div>
+          <div class="social-links">
+            <a href="https://linkedin.com" target="_blank" rel="noopener" class="social-link social-linkedin" aria-label="LinkedIn">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            </a>
+            <a href="https://github.com" target="_blank" rel="noopener" class="social-link social-github" aria-label="GitHub">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+            </a>
+            <a href="https://twitter.com" target="_blank" rel="noopener" class="social-link social-twitter" aria-label="Twitter">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            </a>
+          </div>
+        </div>
+        <form class="contact-form" id="contact-form" novalidate>
+          <div class="form-group">
+            <label for="name">Full Name</label>
+            <input type="text" id="name" name="name" placeholder="Jane Doe" required autocomplete="name" />
+            <span class="form-error" id="name-error"></span>
+          </div>
+          <div class="form-group">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" name="email" placeholder="jane@example.com" required autocomplete="email" />
+            <span class="form-error" id="email-error"></span>
+          </div>
+          <div class="form-group">
+            <label for="message">Message</label>
+            <textarea id="message" name="message" rows="5" placeholder="Tell me about your project..." required></textarea>
+            <span class="form-error" id="message-error"></span>
+          </div>
+          <button type="submit" class="btn btn-primary btn-full">Send Message ✉️</button>
+          <div class="form-success" id="form-success">
+            ✅ Thanks for reaching out! I'll get back to you within 24 hours.
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ── -->
+  <footer>
+    <div class="container">
+      <p>Designed & built by <strong>John Smith</strong> · Cloud Engineer</p>
+      <p class="footer-sub">Built with HTML, CSS & JavaScript · Hosted on AWS</p>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

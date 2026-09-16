@@ -29,8 +29,25 @@ Resources:
         BlockPublicPolicy: true
         IgnorePublicAcls: true
         RestrictPublicBuckets: true
+      VersioningConfiguration:
+        Status: Enabled
+      AccelerateConfiguration:
+        AccelerationStatus: Enabled
       MetricsConfigurations:
         - Id: EntireBucket
+      ReplicationConfiguration:
+        Role: !GetAtt S3ReplicationRole.Arn
+        Rules:
+          - Id: ReplicateAllToEuWest2
+            Priority: 1
+            Status: Enabled
+            Filter:
+              Prefix: ''
+            Destination:
+              Bucket: !Sub 'arn:aws:s3:::${BucketName}-dr'
+              StorageClass: STANDARD
+            DeleteMarkerReplication:
+              Status: Enabled
 
   # WAF Web ACL (CLOUDFRONT scope, must be us-east-1)
   WebACL:
@@ -81,6 +98,32 @@ Resources:
         BlockPublicPolicy: true
         IgnorePublicAcls: true
         RestrictPublicBuckets: true
+      VersioningConfiguration:
+        Status: Enabled
+      AccelerateConfiguration:
+        AccelerationStatus: Enabled
+      ReplicationConfiguration:
+        Role: !GetAtt S3ReplicationRole.Arn
+        Rules:
+          - Id: ReplicateImagesToEuWest2
+            Priority: 1
+            Status: Enabled
+            Filter:
+              Prefix: ''
+            Destination:
+              Bucket: !Sub 'arn:aws:s3:::${BucketName}-images-dr'
+              StorageClass: STANDARD
+            DeleteMarkerReplication:
+              Status: Enabled
+      LifecycleConfiguration:
+        Rules:
+          - Id: ImagesLifecycleRule
+            Status: Enabled
+            Transitions:
+              - TransitionInDays: 60
+                StorageClass: STANDARD_IA
+              - TransitionInDays: 180
+                StorageClass: GLACIER
 
   # Origin Access Control for the images bucket
   ImagesOAC:
@@ -239,6 +282,53 @@ Resources:
         }
 
 
+  # IAM Role for S3 Cross-Region Replication
+  S3ReplicationRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: !Sub '${BucketName}-s3-replication-role'
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: s3.amazonaws.com
+            Action: sts:AssumeRole
+      Policies:
+        - PolicyName: S3ReplicationPolicy
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              # Read from source buckets
+              - Sid: SourceBucketRead
+                Effect: Allow
+                Action:
+                  - s3:GetReplicationConfiguration
+                  - s3:ListBucket
+                Resource:
+                  - !Sub 'arn:aws:s3:::${BucketName}'
+                  - !Sub 'arn:aws:s3:::${BucketName}-images'
+              # Read objects from source buckets
+              - Sid: SourceObjectRead
+                Effect: Allow
+                Action:
+                  - s3:GetObjectVersionForReplication
+                  - s3:GetObjectVersionAcl
+                  - s3:GetObjectVersionTagging
+                Resource:
+                  - !Sub 'arn:aws:s3:::${BucketName}/*'
+                  - !Sub 'arn:aws:s3:::${BucketName}-images/*'
+              # Write objects to destination buckets
+              - Sid: DestinationObjectWrite
+                Effect: Allow
+                Action:
+                  - s3:ReplicateObject
+                  - s3:ReplicateDelete
+                  - s3:ReplicateTags
+                Resource:
+                  - !Sub 'arn:aws:s3:::${BucketName}-dr/*'
+                  - !Sub 'arn:aws:s3:::${BucketName}-images-dr/*'
+
   GitHubActionsDeployRole:
     Type: AWS::IAM::Role
     Properties:
@@ -313,6 +403,18 @@ Resources:
                   arn:aws:cloudfront::${AWS::AccountId}:distribution/${CloudFrontDistribution}
 
 Outputs:
+  S3ReplicationRoleArn:
+    Description: IAM Role ARN used for S3 Cross-Region Replication
+    Value: !GetAtt S3ReplicationRole.Arn
+
+  WebsiteBucketDRName:
+    Description: DR destination bucket name for the website (eu-west-2)
+    Value: !Sub '${BucketName}-dr'
+
+  ImagesBucketDRName:
+    Description: DR destination bucket name for product images (eu-west-2)
+    Value: !Sub '${BucketName}-images-dr'
+
   GitHubActionsRoleArn:
     Description: IAM Role ARN for GitHub Actions OIDC — set as GHA_ROLE_ARN secret
     Value: !GetAtt GitHubActionsDeployRole.Arn

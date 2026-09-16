@@ -1,0 +1,55 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: >
+  Supershop disaster recovery stack - destination S3 buckets for Cross-Region Replication.
+  Must be deployed in the secondary region (eu-west-2) BEFORE the main stack is updated.
+
+Parameters:
+  BucketName:
+    Type: String
+    Description: Must match the BucketName parameter used in the main stack
+    Default: supershop-mazpugo
+
+Resources:
+
+  # Destination bucket for website files (replica of WebsiteBucket)
+  WebsiteBucketDR:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Sub '${BucketName}-dr'
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+      VersioningConfiguration:
+        Status: Enabled
+
+  # Destination bucket for product images (replica of ImagesBucket)
+  ImagesBucketDR:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Sub '${BucketName}-images-dr'
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+      VersioningConfiguration:
+        Status: Enabled
+
+Outputs:
+  WebsiteBucketDRName:
+    Description: DR destination bucket name for the website
+    Value: !Ref WebsiteBucketDR
+
+  WebsiteBucketDRArn:
+    Description: DR destination bucket ARN for the website
+    Value: !GetAtt WebsiteBucketDR.Arn
+
+  ImagesBucketDRName:
+    Description: DR destination bucket name for product images
+    Value: !Ref ImagesBucketDR
+
+  ImagesBucketDRArn:
+    Description: DR destination bucket ARN for product images
+    Value: !GetAtt ImagesBucketDR.Arn
