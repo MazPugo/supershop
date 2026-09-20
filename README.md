@@ -86,14 +86,20 @@ aws cloudformation deploy \
 
 ### 3. Configure GitHub secrets
 
+Authentication uses **OIDC** (OpenID Connect) — GitHub Actions assumes a short-lived
+IAM role instead of storing long-lived access keys. The template creates both the
+GitHub OIDC provider (`GitHubOIDCProvider`) and the deploy role (`GitHubActionsDeployRole`).
+
 In your repository under **Settings → Secrets and variables → Actions**, add:
 
 | Secret | Description |
 |---|---|
-| `AWS_ACCESS_KEY_ID` | IAM user access key ID |
-| `AWS_SECRET_ACCESS_KEY` | IAM user secret access key |
+| `GHA_ROLE_ARN` | IAM role ARN from the `GitHubActionsRoleArn` stack output |
 | `S3_BUCKET_NAME` | Website bucket name (e.g. `supershop-mazpugo`) |
 | `CLOUDFRONT_DISTRIBUTION_ID` | From the `CloudFrontDistributionId` stack output |
+
+No AWS access keys are stored anywhere — the workflow requests a token from GitHub and
+exchanges it for temporary AWS credentials at runtime.
 
 ### 4. Push to deploy
 
@@ -108,9 +114,24 @@ The workflow syncs `index.html`, `app.js`, and `styles.css` to S3, then creates 
 The workflow in `.github/workflows/deploy.yml` runs on every push to `main`:
 
 1. Checks out the repository
-2. Configures AWS credentials from repository secrets
+2. Requests an OIDC token (`permissions: id-token: write`) and assumes the deploy role via `aws-actions/configure-aws-credentials`
 3. Copies the site files to the website S3 bucket with appropriate content types and cache headers
 4. Creates a CloudFront invalidation (`/*`) to clear the CDN cache
+
+### OIDC authentication notes
+
+- The IAM role trust policy scopes access to this repository's branches:
+  `token.actions.githubusercontent.com:sub` = `repo:MazPugo/supershop:ref:refs/heads/*`
+- The audience (`aud`) must be `sts.amazonaws.com`
+- The workflow uses `aws-actions/configure-aws-credentials@v4.1.0` (Node 24 compatible)
+- Only **one** GitHub OIDC provider can exist per AWS account; the template manages it as `GitHubOIDCProvider`
+
+**Troubleshooting** — if the workflow fails with
+`Could not assume role with OIDC: Not authorized to perform sts:AssumeRoleWithWebIdentity`:
+
+1. Confirm the OIDC provider exists: `aws iam list-open-id-connect-providers`
+2. Confirm the `GHA_ROLE_ARN` secret exactly matches the role ARN (no trailing spaces)
+3. Confirm the trust policy `sub` condition matches the branch running the workflow
 
 ## Stack outputs
 
@@ -163,7 +184,7 @@ The project was built incrementally. Each step below maps to a service and a con
 | 5 | **SSL/TLS** | AWS ACM | Certificate issued and attached via the AWS Management Console (not in template). |
 | 6 | **Secure with WAF** | AWS WAF | Managed rule groups for SQL injection and known bad inputs attached to the CloudFront distribution. |
 | 7 | **Monitoring** | CloudWatch / CloudTrail | CloudWatch dashboard displaying CloudFront `Requests` and S3 `AllRequests` metrics (plus error rates and bytes downloaded). |
-| 8 | **CI/CD pipeline** | GitHub Actions | Workflow triggers on push to `main`, syncs files to S3, and invalidates the CloudFront cache. Auth via GitHub repository secrets. |
+| 8 | **CI/CD pipeline** | GitHub Actions | Workflow triggers on push to `main`, syncs files to S3, and invalidates the CloudFront cache. Auth via OIDC role assumption (no stored access keys). |
 | 9 | **Separate images bucket** | Amazon S3 | Dedicated private images bucket with its own OAC, served through a `/images/*` CloudFront path. |
 | 10 | **Transfer Acceleration** | Amazon S3 | Enabled on both the website and images buckets for faster uploads via edge locations. |
 | 11 | **Lifecycle rules** | Amazon S3 | Images transition to Standard-IA after 60 days and to Glacier after 180 days. |
